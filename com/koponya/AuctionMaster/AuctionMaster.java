@@ -53,10 +53,12 @@ public class AuctionMaster extends JavaPlugin {
 	public void loadConfig() {
 		this.conf = this.getConfig();
 		this.data = YamlConfiguration.loadConfiguration(new File(this.getDataFolder(), "data.yml"));
+		PlayerInventorys.loadAll(data);
 	}
 	
 	@Override
 	public void saveConfig() {
+		PlayerInventorys.saveAll(data);
 		try {
 			this.data.save(new File(this.getDataFolder(), "data.yml"));
 		} catch (IOException e) {
