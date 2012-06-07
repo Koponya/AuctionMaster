@@ -1,0 +1,10 @@
+name: AuctionMaster
+version: 1.0
+authors: [Koponya]
+description: 
+main: com.koponya.AuctionMaster.AuctionMaster
+depend: [Vault]
+commands:
+  auctionmaster:
+    aliases: [am]
+    description: This is the base command
