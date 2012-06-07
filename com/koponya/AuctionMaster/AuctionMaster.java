@@ -7,22 +7,37 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 
+import net.milkbowl.vault.permission.Permission;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AuctionMaster extends JavaPlugin {
 
 	private Logger log;
+	private Permission perm;
 	public FileConfiguration conf;
 	public FileConfiguration data;
-	public String pluginName;
+	public AuctionCommands command;
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		return AuctionCommands.onCommand(sender, cmd, label, args);
+		return command.onCommand(sender, cmd, label, args);
+	}
+	
+	private boolean setupPermissions() {
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perm = rsp.getProvider();
+        return perm != null;
+    }
+	
+	public boolean hasPerm(Player p, String perm) {
+		return this.perm.has(p, perm) || p.isOp();
 	}
 	
 	public void infoLog(String msg) {
@@ -40,7 +55,6 @@ public class AuctionMaster extends JavaPlugin {
 	
 	@Override
 	public void saveConfig() {
-		//super.saveConfig();
 		try {
 			this.data.save(new File(this.getDataFolder(), "data.yml"));
 		} catch (IOException e) {
@@ -68,15 +82,16 @@ public class AuctionMaster extends JavaPlugin {
 	
 	public void onLoad() {
 		this.log = this.getLogger();
-		this.pluginName = this.getDescription().getName();
-		this.loadConfig();
-		this.saveConfig();
+		copyDefault("config.yml");
 		copyDefault("hu.lang");
+		this.loadConfig();
 	}
 	
 	public void onEnable() {
 		Lang.init(this.conf.getString("language"));
-		infoLog(Lang.get("console.welcome"));
+		this.command = new AuctionCommands(this);
+		setupPermissions();
+		infoLog("Plugin enabled");
 	}
 	
 	public void onDisable() {
