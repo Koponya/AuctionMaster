@@ -1,3 +1,4 @@
-command.usage=�dHaszn�lat: /auctionmaster reload|set|remove
-msg.nopermission=�cNincs jogod ehhez a parancshoz!
-msg.set=�aA kiv�lasztott l�d�ra kattints jobb klikkel.
+command.usage=§dHasználat: /auctionmaster reload|set|remove
+msg.nopermission=§cNincs jogod ehhez a parancshoz!
+msg.set=§aA kiválasztott ládára kattints jobb klikkel.
+msg.set.ok=§aSikeresen kiválasztottad ezt a ládát!

@@ -29,7 +29,8 @@ public class AuctionCommands {
 				}
 	
 				if(args.length==1 && args[0].equalsIgnoreCase("remove")) {
-					
+					p.sendMessage("remove");
+					return true;
 				}
 			} else {
 				//console

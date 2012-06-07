@@ -67,7 +67,7 @@ public class AuctionMaster extends JavaPlugin {
 	private void copyDefault(String name) {
         try {
         	File file = new File(this.getDataFolder(),name);
-        	if(file.exists()) return;
+        	//if(file.exists()) return;
         	InputStream in = this.getResource(name);
             OutputStream out = new FileOutputStream(file);
             byte[] buf = new byte[1024];
