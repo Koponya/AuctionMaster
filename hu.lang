@@ -1,1 +1,3 @@
-command.usage=Használat: /auctionmaster reload|set
+command.usage=§dHasználat: /auctionmaster reload|set|remove
+msg.nopermission=§cNincs jogod ehhez a parancshoz!
+msg.set=§aA kiválasztott ládára kattints jobb klikkel.

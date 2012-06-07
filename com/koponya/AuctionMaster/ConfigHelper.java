@@ -1,8 +1,10 @@
 package com.koponya.AuctionMaster;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.inventory.Inventory;
 
 public class ConfigHelper {
 	private ConfigHelper() {}
@@ -29,5 +31,13 @@ public class ConfigHelper {
 				(float)conf.getDouble(node+".yaw"),
 				(float)conf.getDouble(node+".pitch")
 			);
+	}
+	
+	public static void setInventory(Inventory inv, String node, FileConfiguration conf) {
+		throw new NotImplementedException();
+	}
+	
+	public static Inventory getInventory(String node, FileConfiguration conf) {
+		throw new NotImplementedException();
 	}
 }

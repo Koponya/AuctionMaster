@@ -16,7 +16,7 @@ public class Lang {
 		if(!Lang.language.isEmpty())
 			return false;
 		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("plugins/AuctionMaster/hu.lang")), "UTF8"));
+			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("plugins/AuctionMaster/hu.lang"))/*, "UTF8"*/));
 			String line;
 			while((line=in.readLine())!=null) {
 				try {
@@ -26,7 +26,7 @@ public class Lang {
 			}
 			in.close();
 			if(!lang.equalsIgnoreCase("hu")) {
-				in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("plugins/AuctionMaster/"+lang+".lang")), "UTF8"));
+				in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("plugins/AuctionMaster/"+lang+".lang"))/*, "UTF8"*/));
 				while((line=in.readLine())!=null) {
 					try {
 						String[] word = line.split("=", 2);
@@ -42,7 +42,8 @@ public class Lang {
 	}
 	
 	public static String get(String key) {
-		return language.get(key);
+		String ret = language.get(key);
+		return (ret!=null?ret:"§cNot found: "+key);
 	}
 	
 }

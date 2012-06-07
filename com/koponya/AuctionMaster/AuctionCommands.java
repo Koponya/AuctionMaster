@@ -2,6 +2,9 @@ package com.koponya.AuctionMaster;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import com.koponya.AuctionMaster.ChestListener.EventType;
 
 public class AuctionCommands {
 
@@ -13,12 +16,28 @@ public class AuctionCommands {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if((label.equalsIgnoreCase("auctionmaster") || label.equalsIgnoreCase("am"))) {
-			if(args.length==1 && args[0].equalsIgnoreCase("set")) {
-				
+			if(sender instanceof Player) {
+				Player p = (Player)sender;
+				if(args.length==1 && args[0].equalsIgnoreCase("set")) {
+					if(!plugin.hasPerm(p, "auctionmaster.set")) {
+						p.sendMessage(Lang.get("msg.nopermission"));
+						return true;
+					}
+					plugin.chestListener.add(p.getName(), EventType.Set);
+					p.sendMessage(Lang.get("msg.set"));
+					return true;
+				}
+	
+				if(args.length==1 && args[0].equalsIgnoreCase("remove")) {
+					
+				}
+			} else {
+				//console
 			}
+			sender.sendMessage(Lang.get("command.usage"));
+			return true;
 		}
 		
-		sender.sendMessage(Lang.get("command.usage"));
 		return false;
 	}
 }

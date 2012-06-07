@@ -14,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,6 +25,7 @@ public class AuctionMaster extends JavaPlugin {
 	public FileConfiguration conf;
 	public FileConfiguration data;
 	public AuctionCommands command;
+	public ChestListener chestListener;
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -89,8 +91,16 @@ public class AuctionMaster extends JavaPlugin {
 	
 	public void onEnable() {
 		Lang.init(this.conf.getString("language"));
-		this.command = new AuctionCommands(this);
 		setupPermissions();
+		
+		//create objects
+		this.command = new AuctionCommands(this);
+		this.chestListener = new ChestListener(this);
+		
+		//setup events
+		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(chestListener, this);
+		
 		infoLog("Plugin enabled");
 	}
 	
