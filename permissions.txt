@@ -1,0 +1,3 @@
+/auctionmaster set - auctionmaster.set - set a chest for auction chest
+/auctionmaster reload - auctionmaster.reload - reload the auctionmaste's config
+Chest access - auctionmaster.chest.use - to open the auction's chests

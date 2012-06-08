@@ -43,8 +43,12 @@ public class ChestListener implements Listener {
 		}
 		//get open
 		if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && b.getType().equals(Material.CHEST) && b.getLocation().equals(ConfigHelper.getLocation("chest", plugin.data))) {
-			e.setCancelled(true);
-			p.openInventory(PlayerInventorys.get(p.getName()).getInventory());
+			if(plugin.hasPerm(p, "auctionmaster.chest.use")) {
+				e.setCancelled(true);
+				p.openInventory(PlayerInventorys.get(p.getName()).getInventory());
+			} else {
+				p.sendMessage(Lang.get("msg.chest.nopermission"));
+			}
 		}
 	}
 }

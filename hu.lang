@@ -1,5 +1,6 @@
 command.usage=§dHasználat: /auctionmaster reload|set|remove
 msg.nopermission=§cNincs jogod ehhez a parancshoz!
+msg.chest.nopermission=§cNincs jogod az aukciós ládák használatához!
 msg.set=§aA kiválasztott ládára kattints jobb klikkel.
 msg.set.ok=§aSikeresen kiválasztottad ezt a ládát!
 msg.set.console=%name% beállította ezt a ládát: (%coord%)
