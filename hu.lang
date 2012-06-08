@@ -6,3 +6,5 @@ msg.set.ok=§aSikeresen kiválasztottad ezt a ládát!
 msg.set.console=%name% beállította ezt a ládát: (%coord%)
 msg.reload.ok=§aSikeresen újratöltve a config!
 msg.reload.console=%name% újratöltötte a configot!
+msg.auction.start=§dA kezdö licit megadásához és az aukció indításához használd a /bid [összeg] parancsot.
+msg.auction.already=§cMár fut egy aukció. Próbáld meg késöbb.

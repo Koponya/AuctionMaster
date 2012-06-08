@@ -31,7 +31,7 @@ public class ChestListener implements Listener {
 	@EventHandler
 	public void chestClick(PlayerInteractEvent e) {
 		Block b = e.getClickedBlock();
-		Location l = b.getLocation();
+		Location l = b==null?null:b.getLocation();
 		Player p = e.getPlayer();
 		
 		//get events
@@ -44,8 +44,13 @@ public class ChestListener implements Listener {
 		}
 		
 		if(e.getAction().equals(Action.LEFT_CLICK_BLOCK) && b.getType().equals(Material.CHEST) && b.getLocation().equals(ConfigHelper.getLocation("chest", plugin.data))) {
-			if(AuctionThread.current==null)
-				new AuctionThread(p.getName(), PlayerInventorys.get(p.getName()).getInventory().getContents(), plugin.conf).start();
+			e.setCancelled(true);
+			if(AuctionThread.current==null) {
+				new AuctionThread(p.getName(), PlayerInventorys.get(p.getName()).getInventory().getContents(), plugin.conf);
+				p.sendMessage(Lang.get("msg.auction.start"));
+			} else {
+				p.sendMessage(Lang.get("msg.auction.already"));
+			}
 		}
 		
 		//get open

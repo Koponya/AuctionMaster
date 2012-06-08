@@ -8,3 +8,5 @@ commands:
   auctionmaster:
     aliases: [am]
     description: This is the base command
+  bid:
+    description: this is the command to bid

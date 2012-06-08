@@ -56,6 +56,10 @@ public class AuctionCommands {
 			return true;
 		}
 		
+		if(label.equalsIgnoreCase("bid")) {
+			if(AuctionThread.current!=null && !AuctionThread.current.run) AuctionThread.current.start();
+		}
+		
 		return false;
 	}
 }
