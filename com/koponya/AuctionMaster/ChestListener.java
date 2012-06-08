@@ -33,6 +33,7 @@ public class ChestListener implements Listener {
 		Block b = e.getClickedBlock();
 		Location l = b.getLocation();
 		Player p = e.getPlayer();
+		
 		//get events
 		if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && events.containsKey(p.getName()) && b.getType().equals(Material.CHEST)) {
 			ConfigHelper.setLocation(b.getLocation(), "chest", plugin.data);
@@ -41,6 +42,12 @@ public class ChestListener implements Listener {
 			plugin.infoLog(Lang.get("msg.set.console").replace("%name%", p.getName()).replace("%coord%", l.getWorld().getName()+" ["+l.getX()+", "+l.getY()+", "+l.getZ()+"]"));
 			p.sendMessage(Lang.get("msg.set.ok"));
 		}
+		
+		if(e.getAction().equals(Action.LEFT_CLICK_BLOCK) && b.getType().equals(Material.CHEST) && b.getLocation().equals(ConfigHelper.getLocation("chest", plugin.data))) {
+			if(AuctionThread.current==null)
+				new AuctionThread(p.getName(), PlayerInventorys.get(p.getName()).getInventory().getContents(), plugin.conf).start();
+		}
+		
 		//get open
 		if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && b.getType().equals(Material.CHEST) && b.getLocation().equals(ConfigHelper.getLocation("chest", plugin.data))) {
 			if(plugin.hasPerm(p, "auctionmaster.chest.use")) {
