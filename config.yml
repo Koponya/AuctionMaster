@@ -1,1 +1,11 @@
+#the plugin language, available: hu
 language: 'hu'
+
+#time in seconds, how long they hold a auction minimum
+auctionTime: 60
+
+#time in seconds, how often to write the auction
+auctionTick: 5
+
+#time in seconds, how much to extend the time of auction if a new bid is received
+auctionExtension: 20
