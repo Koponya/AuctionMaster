@@ -36,9 +36,8 @@ public class ConfigHelper {
 	
 	public static void setInventory(Inventory inv, String node, FileConfiguration conf) {
 		ItemStack[] items = inv.getContents();
-		int j=0;
-		for(ItemStack i : items) {
-			conf.set(node+"."+j++, i);
+		for(int i=0;i<items.length;i++) {
+			conf.set(node+"."+i, items[i]);
 		}
 	}
 	

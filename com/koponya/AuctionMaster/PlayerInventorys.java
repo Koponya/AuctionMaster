@@ -48,7 +48,7 @@ public class PlayerInventorys implements InventoryHolder{
 	
 	public static void loadAll(FileConfiguration data) {
 		ConfigurationSection sec = data.getConfigurationSection("inventorys");
-		Set<String> names = sec.getKeys(true);
+		Set<String> names = sec.getKeys(false);
 		for(String name : names) {
 			PlayerInventorys pi = new PlayerInventorys();
 			pi.setItemStack(ConfigHelper.getInventory("inventorys."+name, data));
