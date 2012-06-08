@@ -32,6 +32,16 @@ public class AuctionCommands {
 					p.sendMessage("remove");
 					return true;
 				}
+
+				if(args.length==1 && args[0].equalsIgnoreCase("reload")) {
+					if(!plugin.hasPerm(p, "auctionmaster.reload")) {
+						p.sendMessage(Lang.get("msg.nopermission"));
+						return true;
+					}
+					plugin.loadConfig();
+					p.sendMessage(Lang.get("msg.reload.ok"));
+					return true;
+				}
 			} else {
 				//console
 			}

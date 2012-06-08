@@ -53,7 +53,8 @@ public class AuctionMaster extends JavaPlugin {
 	public void loadConfig() {
 		this.conf = this.getConfig();
 		this.data = YamlConfiguration.loadConfiguration(new File(this.getDataFolder(), "data.yml"));
-		PlayerInventorys.loadAll(data);
+		PlayerInventorys.loadAll(this.data);
+		Lang.init(this.conf.getString("language"));
 	}
 	
 	@Override
@@ -92,7 +93,6 @@ public class AuctionMaster extends JavaPlugin {
 	}
 	
 	public void onEnable() {
-		Lang.init(this.conf.getString("language"));
 		setupPermissions();
 		
 		//create objects
