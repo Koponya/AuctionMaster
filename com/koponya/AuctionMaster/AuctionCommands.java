@@ -39,11 +39,18 @@ public class AuctionCommands {
 						return true;
 					}
 					plugin.loadConfig();
-					p.sendMessage(Lang.get("msg.reload.ok"));
+					p.sendMessage(Lang.get("msg.reload"));
+					plugin.infoLog(Lang.get("msg.reload.console").replace("%name%", p.getName()));
 					return true;
 				}
 			} else {
-				//console
+				//console only
+				if(args.length==1 && args[0].equalsIgnoreCase("reload")) {
+					plugin.loadConfig();
+					sender.sendMessage(Lang.get("msg.reload"));
+					return true;
+				}
+
 			}
 			sender.sendMessage(Lang.get("command.usage"));
 			return true;

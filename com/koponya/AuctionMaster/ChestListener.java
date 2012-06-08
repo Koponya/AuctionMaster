@@ -3,6 +3,7 @@ package com.koponya.AuctionMaster;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -30,11 +31,14 @@ public class ChestListener implements Listener {
 	@EventHandler
 	public void chestClick(PlayerInteractEvent e) {
 		Block b = e.getClickedBlock();
+		Location l = b.getLocation();
 		Player p = e.getPlayer();
 		//get events
-		if(events.containsKey(p.getName()) && b.getType().equals(Material.CHEST)) {
+		if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && events.containsKey(p.getName()) && b.getType().equals(Material.CHEST)) {
 			ConfigHelper.setLocation(b.getLocation(), "chest", plugin.data);
 			events.remove(p.getName());
+			e.setCancelled(true);
+			plugin.infoLog(Lang.get("msg.set.console").replace("%name%", p.getName()).replace("%coord%", l.getWorld().getName()+" ["+l.getX()+", "+l.getY()+", "+l.getZ()+"]"));
 			p.sendMessage(Lang.get("msg.set.ok"));
 		}
 		//get open
