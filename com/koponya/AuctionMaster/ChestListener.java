@@ -6,6 +6,7 @@ import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -46,7 +47,6 @@ public class ChestListener implements Listener {
 		if(e.getAction().equals(Action.LEFT_CLICK_BLOCK) && b.getType().equals(Material.CHEST) && b.getLocation().equals(ConfigHelper.getLocation("chest", plugin.data))) {
 			e.setCancelled(true);
 			if(AuctionThread.current==null) {
-				new AuctionThread(p.getName(), PlayerInventorys.get(p.getName()).getInventory().getContents(), plugin.conf);
 				p.sendMessage(Lang.get("msg.auction.start"));
 			} else {
 				p.sendMessage(Lang.get("msg.auction.already"));

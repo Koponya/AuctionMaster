@@ -1,4 +1,4 @@
-command.usage=§dHasználat: /auctionmaster reload|set|remove
+msg.usage=§dHasználat: /auctionmaster reload|set|remove
 msg.nopermission=§cNincs jogod ehhez a parancshoz!
 msg.chest.nopermission=§cNincs jogod az aukciós ládák használatához!
 msg.set=§aA kiválasztott ládára kattints jobb klikkel.
@@ -7,4 +7,9 @@ msg.set.console=%name% beállította ezt a ládát: (%coord%)
 msg.reload.ok=§aSikeresen újratöltve a config!
 msg.reload.console=%name% újratöltötte a configot!
 msg.auction.start=§dA kezdö licit megadásához és az aukció indításához használd a /bid [összeg] parancsot.
+msg.auction.cantstart=§cCsak egy fajta itemet tehetsz fel egyszerre!
+msg.auction.first=§d%owner% új aukciót indított: %amount% darabot kínál ebböl: %item%
+msg.auction.tick=§atick
 msg.auction.already=§cMár fut egy aukció. Próbáld meg késöbb.
+msg.bid.usage=§dHasználat: /bid [összeg]
+msg.bid.nobid=§cJelenleg nincs aukció!

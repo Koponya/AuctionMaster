@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 
+import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
 import org.bukkit.command.Command;
@@ -22,6 +23,7 @@ public class AuctionMaster extends JavaPlugin {
 
 	private Logger log;
 	private Permission perm;
+	private Economy econ;
 	public FileConfiguration conf;
 	public FileConfiguration data;
 	public AuctionCommands command;
@@ -37,6 +39,13 @@ public class AuctionMaster extends JavaPlugin {
         perm = rsp.getProvider();
         return perm != null;
     }
+	
+	private boolean setupEconomy() {
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        econ = rsp.getProvider();
+        return econ != null;
+    }
+	
 	
 	public boolean hasPerm(Player p, String perm) {
 		return this.perm.has(p, perm) || p.isOp();
@@ -94,7 +103,7 @@ public class AuctionMaster extends JavaPlugin {
 	
 	public void onEnable() {
 		setupPermissions();
-		
+		setupPermissions();
 		//create objects
 		this.command = new AuctionCommands(this);
 		this.chestListener = new ChestListener(this);

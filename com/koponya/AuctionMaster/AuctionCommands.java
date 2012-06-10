@@ -52,12 +52,42 @@ public class AuctionCommands {
 				}
 
 			}
-			sender.sendMessage(Lang.get("command.usage"));
+			sender.sendMessage(Lang.get("msg.usage"));
 			return true;
 		}
 		
 		if(label.equalsIgnoreCase("bid")) {
-			if(AuctionThread.current!=null && !AuctionThread.current.run) AuctionThread.current.start();
+			if(sender instanceof Player) {
+				Player p = (Player)sender;
+				if(!plugin.hasPerm(p, "auctionmaster.bid")) {
+					p.sendMessage(Lang.get("msg.nopermission"));
+					return true;
+				}
+				if(args.length!=1) {
+					p.sendMessage(Lang.get("msg.bid.usage"));
+					return true;
+				}
+				int arg = 0;
+				try {
+					arg = Integer.parseInt(args[0]);
+				} catch (Exception ex) {
+					p.sendMessage(Lang.get("msg.bid.usage"));
+					return true;
+				}
+				if(AuctionThread.current==null) {
+					new AuctionThread(p.getName(), PlayerInventorys.get(p.getName()).getInventory().getContents(), plugin.conf, arg);
+					if(AuctionThread.current==null) {
+						p.sendMessage(Lang.get("msg.auction.cantstart"));
+					} else {
+						AuctionThread.current.start();
+					}
+					return true;
+				} else {
+					//van-e elég pénz?
+					AuctionThread.current.bid(p.getName(), arg);
+				}
+				
+			}
 		}
 		
 		return false;
