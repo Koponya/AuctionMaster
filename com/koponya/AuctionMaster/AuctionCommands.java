@@ -67,26 +67,29 @@ public class AuctionCommands {
 					p.sendMessage(Lang.get("msg.bid.usage"));
 					return true;
 				}
-				int arg = 0;
-				try {
-					arg = Integer.parseInt(args[0]);
-				} catch (Exception ex) {
-					p.sendMessage(Lang.get("msg.bid.usage"));
-					return true;
-				}
-				if(AuctionThread.current==null) {
-					new AuctionThread(p.getName(), PlayerInventorys.get(p.getName()).getInventory().getContents(), plugin.conf, arg);
-					if(AuctionThread.current==null) {
-						p.sendMessage(Lang.get("msg.auction.cantstart"));
-					} else {
-						AuctionThread.current.start();
-					}
-					return true;
+				if(args[0].equalsIgnoreCase("info")) {
+					
 				} else {
-					//van-e elég pénz?
-					AuctionThread.current.bid(p.getName(), arg);
+					int arg = 0;
+					try {
+						arg = Integer.parseInt(args[0]);
+					} catch (Exception ex) {
+						p.sendMessage(Lang.get("msg.bid.usage"));
+						return true;
+					}
+					if(AuctionThread.current==null) {
+						new AuctionThread(p.getName(), PlayerInventorys.get(p.getName()).getInventory().getContents(), plugin.conf, plugin.data, arg);
+						if(AuctionThread.current==null) {
+							p.sendMessage(Lang.get("msg.auction.cantstart"));
+						} else {
+							AuctionThread.current.start();
+						}
+						return true;
+					} else {
+						//van-e elég pénz?
+						AuctionThread.current.bid(p.getName(), arg);
+					}
 				}
-				
 			}
 		}
 		

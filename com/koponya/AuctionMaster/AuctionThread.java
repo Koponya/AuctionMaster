@@ -6,15 +6,18 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class AuctionThread extends Thread {
 
 	public static AuctionThread current;
 	
-	private final List<Integer> tools = new ArrayList(Arrays.asList(256,257,258,261,267,268,269,270,271,272,273,274,275,276,277,278,279,283,284,285,286,290,291,292,293,294,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317));
+	private final List<Integer> tools = new ArrayList<Integer>(Arrays.asList(256,257,258,261,267,268,269,270,271,272,273,274,275,276,277,278,279,283,284,285,286,290,291,292,293,294,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317));
 	private FileConfiguration conf;
+	private FileConfiguration data;
 	private int bid;
 	private int itemId;
 	private byte itemD;
@@ -26,8 +29,9 @@ public class AuctionThread extends Thread {
 	private long nextTick;
 	public boolean run;
 	
-	public AuctionThread(String owner, ItemStack[] items, FileConfiguration conf, int bid) {
+	public AuctionThread(String owner, ItemStack[] items, FileConfiguration conf, FileConfiguration data, int bid) {
 		this.conf = conf;
+		this.data = data;
 		this.bid = 0;
 		this.owner = owner;
 		this.bid = bid;
@@ -89,9 +93,17 @@ public class AuctionThread extends Thread {
 		while(run) {
 			long now = System.currentTimeMillis();
 			if(i++==0) {
-				this.sendFormatedBroadcast(Lang.get("msg.auction.first"));
+				Bukkit.broadcastMessage(formatMessage(Lang.get("msg.auction.first")));
 			} else {
-				this.sendFormatedBroadcast(Lang.get("msg.auction.tick"));
+				String msg = formatMessage(Lang.get("msg.auction.tick"));
+				List<World> worlds = Bukkit.getServer().getWorlds();
+				for(World w:worlds) {
+					List<Player> players = w.getPlayers();
+					for(Player pl : players) {
+						if(data.getBoolean("listen."+pl.getName().toLowerCase(), false))
+							pl.sendMessage(msg);
+					}
+				}
 			}
 			
 			
@@ -107,12 +119,12 @@ public class AuctionThread extends Thread {
 		AuctionThread.current = null;
 	}
 	
-	private void sendFormatedBroadcast(String msg) {
-		Bukkit.getServer().broadcastMessage(msg
-				.replace("%owner%", owner==null?"":owner)
-				.replace("%maxbid%", maxBidder==null?"":maxBidder)
-				.replace("%amount%", Integer.toString(itemAmount))
-				.replace("%item%", itemId==0?"":Material.getMaterial(itemId).name().toLowerCase().replace("_", " "))
-			);
+	private String formatMessage(String msg) {
+		return msg
+			.replace("%owner%", owner==null?"":owner)
+			.replace("%maxbid%", maxBidder==null?"":maxBidder)
+			.replace("%amount%", Integer.toString(itemAmount))
+			.replace("%item%", itemId==0?"":Material.getMaterial(itemId).name().toLowerCase().replace("_", " "))
+			.replace("%left%", (((timeOut-System.currentTimeMillis())/1000)+1)+" "+Lang.get("word.second"));
 	}
 }

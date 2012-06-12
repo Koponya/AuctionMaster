@@ -103,7 +103,7 @@ public class AuctionMaster extends JavaPlugin {
 	
 	public void onEnable() {
 		setupPermissions();
-		setupPermissions();
+		setupEconomy();
 		//create objects
 		this.command = new AuctionCommands(this);
 		this.chestListener = new ChestListener(this);
